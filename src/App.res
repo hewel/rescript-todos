@@ -1,4 +1,6 @@
 @react.component
 let default = () => {
-  <div className="bg-blue-50"> {React.string("App")} </div>
+  <div className="rounded-md mx-auto bg-gray-100 shadow-lg mt-20 py-6 px-4 w-[480px]">
+    <Addtodo />
+  </div>
 }
