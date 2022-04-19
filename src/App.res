@@ -15,7 +15,11 @@ let reducer = (state: todos, action) => {
       },
     ])
   | RemoveTodo(id) => state->Belt.Array.keep(todo => todo.id != id)
-  | ToggleTodo(id) => state->Belt.Array.map(todo => {...todo, completed: todo.id != id})
+  | ToggleTodo(id) =>
+    state->Belt.Array.map(todo => {
+      ...todo,
+      completed: todo.id == id ? !todo.completed : todo.completed,
+    })
   }
 }
 
@@ -27,7 +31,7 @@ let default = () => {
     switch value {
     | Some(str) =>
       if Js.String.trim(str) != "" && !Belt.Array.some(todoList, ({text}) => text == str) {
-        dispatch(AddTodo(str))
+        str->AddTodo->dispatch
       }
     | None => ()
     }
@@ -38,7 +42,9 @@ let default = () => {
     <Addtodo onAdd />
     <ul>
       {todoList
-      ->Belt.Array.map(todo => <TodoItem key={Js.Int.toString(todo.id)} todo />)
+      ->Belt.Array.map(todo =>
+        <TodoItem key={Js.Int.toString(todo.id)} todo onComplete={id => id->ToggleTodo->dispatch} />
+      )
       ->React.array}
     </ul>
   </div>
