@@ -5,7 +5,7 @@ let make = (~todo: todo, ~onToggle: int => unit, ~onRemove: int => unit) => {
   <li className="border-b flex py-4 px-6 text-3xl items-center">
     <input
       type_="checkbox"
-      className="h-6 m-0 mr-4 w-6 accent-blue-500"
+      className="h-6 m-0 mr-4 w-6 accent-sky-600"
       checked={completed}
       onChange={_ => onToggle(id)}
     />
