@@ -15,7 +15,7 @@ let make = (~onAdd: option<string> => unit) => {
     />
     <button
       type_="submit"
-      className="bg-white border rounded-r-lg border-l-0 text-lg ring-sky-400 col-span-2 hover:(bg-slate-100) focus:(ring-2 bg-slate-50) ">
+      className="bg-white border rounded-r-lg cursor-pointer border-l-0 text-lg ring-sky-400 col-span-2 hover:(bg-slate-100) focus:(ring-2 bg-slate-50) ">
       {React.string("ADD")}
     </button>
   </form>
