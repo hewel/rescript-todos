@@ -37,10 +37,10 @@ let default = () => {
     }
   }
 
-  <div className="bg-white rounded-md mx-auto border-1 shadow-md mt-20 px-6 pt-4 pb-8 w-[480px]">
+  <div className="bg-white rounded-md mx-auto border-1 shadow-md mt-20 pt-4 pb-8 w-[480px]">
     <h1 className="text-center"> {React.string("Todo List")} </h1>
     <Addtodo onAdd />
-    <ul>
+    <ul className="list-none py-2 px-0">
       {todoList
       ->Belt.Array.map(todo =>
         <TodoItem key={Js.Int.toString(todo.id)} todo onComplete={id => id->ToggleTodo->dispatch} />
