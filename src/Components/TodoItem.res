@@ -16,7 +16,8 @@ let make = (~todo: todo, ~onToggle: int => unit, ~onRemove: int => unit) => {
       {React.string(text)}
     </span>
     <button
-      className="bg-transparent cursor-pointer ml-auto h-6 p-0 w-6" onClick={_ => onRemove(id)}>
+      className="bg-transparent cursor-pointer ml-auto h-6 p-0 w-6 hover:text-rose-600"
+      onClick={_ => onRemove(id)}>
       <Icon.Trash size={24} />
     </button>
   </li>
