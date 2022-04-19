@@ -1,12 +1,33 @@
+type todo = TodoItem.todo
+type todos = array<todo>
+type action =
+  | AddTodo(string)
+  | RemoveTodo(int)
+  | ToggleTodo(int)
+let reducer = (state: todos, action) => {
+  switch action {
+  | AddTodo(text) =>
+    state->Belt.Array.concat([
+      {
+        id: Belt.Array.length(state),
+        text: text,
+        completed: false,
+      },
+    ])
+  | RemoveTodo(id) => state->Belt.Array.keep(todo => todo.id != id)
+  | ToggleTodo(id) => state->Belt.Array.map(todo => {...todo, completed: todo.id != id})
+  }
+}
+
 @react.component
 let default = () => {
-  let (todoList, setTodoList) = React.useState(_ => [])
+  let (todoList, dispatch) = reducer->React.useReducer([])
 
   let onAdd = value => {
     switch value {
     | Some(str) =>
-      if Js.String.trim(str) != "" && !Belt.Array.some(todoList, i => i == str) {
-        setTodoList(Belt.Array.concat([str]))
+      if Js.String.trim(str) != "" && !Belt.Array.some(todoList, ({text}) => text == str) {
+        dispatch(AddTodo(str))
       }
     | None => ()
     }
@@ -17,7 +38,7 @@ let default = () => {
     <Addtodo onAdd />
     <ul>
       {todoList
-      ->Belt.Array.map(i => <li key={i}> <input type_="checkbox" /> {React.string(i)} </li>)
+      ->Belt.Array.map(todo => <TodoItem key={Js.Int.toString(todo.id)} todo />)
       ->React.array}
     </ul>
   </div>
